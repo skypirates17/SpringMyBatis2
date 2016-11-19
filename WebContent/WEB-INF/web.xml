@@ -64,4 +64,22 @@
 	<welcome-file-list>
 		<welcome-file>index.htm</welcome-file>
 	</welcome-file-list>
+	
+
+	<!-- 
+		A filter is typically used to perform a particular piece of functionality either before or 
+		after the primary functionality of a web application is performed. 
+		
+		It is mainly used to perform filtering tasks such as conversion, logging, compression, 
+		encryption and decryption, input validation, etc. 
+
+	<filter>
+		<filter-name>logSystemProperties</filter-name>
+		<filter-class>com.acss.util.logger</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>logSystemProperties</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+		-->
 </web-app>

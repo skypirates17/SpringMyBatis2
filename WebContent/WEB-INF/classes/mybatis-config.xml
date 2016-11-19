@@ -31,5 +31,7 @@
 			REUSE executor reuses prepared statements. BATCH executor reuses statements 
 			and batches updates. -->
 		<setting name="defaultExecutorType" value="SIMPLE" />
+		
+		<setting name="logImpl" value="LOG4J"/>
 	</settings>
 </configuration>  

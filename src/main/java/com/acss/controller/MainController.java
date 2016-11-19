@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +20,10 @@ import com.acss.service.IStudentInfoService;
 @Controller
 public class MainController {
 
-	@Autowired
-	IStudentInfoService studentInfoService;
+	private final Logger logger = Logger.getLogger(MainController.class);
 	
 	@Autowired
-	IStudentInfoService studentDuplicateInfoService;
+	IStudentInfoService studentInfoService;
 
 	@RequestMapping(value = { "/index.htm" }, method = { RequestMethod.GET })
 	public ModelAndView doGet(HttpServletRequest request,
@@ -32,8 +32,8 @@ public class MainController {
 		List<Map<String,Object>> recordsList = new ArrayList<Map<String,Object>>();
 		recordsList = studentInfoService.loadStudentRecords(null);
 		
-		studentDuplicateInfoService.loadStudentRecords(null);
-
+		logger.info("recordsList{} : " + recordsList);
+		
 		return new ModelAndView("index").addObject("recordsList", recordsList);
 	}
 }
