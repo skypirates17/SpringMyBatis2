@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	 <!-- 
+	 	 PropertyPlaceholderConfigurer is a property resource configurer that resolves placeholders in 
+	 	 bean property values of context definitions. It pulls values from a properties file into bean definitions.
+	 	 
+	 	 ALTERNATIVE FOR propertyConfigurer
+			<context:property-placeholder location="/WEB-INF/jdbc.properties,/WEB-INF/mybatis/mybatis.properties" />
+	 	 
+	 	 @locations - specify the location of property file to use
+	  -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations" value="WEB-INF/classes/resources.properties" />
+	</bean>
+	
+	
+	<!-- 
+		BasicDataSource is a Database Connection Pool that is used to establish a connection to database.
+		The basic properties is the driver classname, connection url, username and password. 
+	 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	
+	
+	<!-- 
+		SqlSessionFactoryBean implements Spring's FactoryBean interface. 
+		This means that the bean Spring ultimately creates is not the SqlSessionFactoryBean itself, 
+		but what the factory returns as a result of the getObject() call on the factory. 
+		In this case, Spring will build an SqlSessionFactory for you at application startup and 
+		store it with the name sqlSessionFactory
+		
+		@ mapperLocations - this property takes a list of resource locations. 
+		This property can be used to specify the location of MyBatis XML mapper files. 
+		The value can contain Ant-style patterns to load all files in a directory or 
+		to recursively search all paths from a base location.
+		
+		@configLocation - is used to specify the location of the MyBatis XML configuration file. 
+		One case where this is needed is if the base MyBatis configuration needs to be changed. 
+		Usually this will be <settings> or <typeAliases> sections.
+	 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath:com/acss/mapper/impl/*.xml" /> 
+		<property name="configLocation" value="/WEB-INF/classes/mybatis-config.xml" />
+	</bean>
+</beans>
