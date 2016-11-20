@@ -16,9 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.acss.service.IStudentInfoService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"classpath:/WEB-INF/classes/dispatcher-servlet.xml",
-"classpath:/WEB-INF/classes/database-config.xml",
-"classpath:/WEB-INF/classes/mapper-config.xml"})
+@ContextConfiguration(locations={"classpath:classes/dispatcher-servlet.xml",
+"classpath:classes/database-config.xml"})
 @Transactional
 @TransactionConfiguration(defaultRollback=true)
 public class TestStudentInfoService {
